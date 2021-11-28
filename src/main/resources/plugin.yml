@@ -1,0 +1,10 @@
+name: Invsee
+version: 0.0.2
+api: 1.0.0
+author: Leon1917141
+main: Invsee.Main
+permissions:
+  invsee.cmd:
+    default: false
+  endersee.cmd:
+    default: false
