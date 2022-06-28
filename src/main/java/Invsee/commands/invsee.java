@@ -24,7 +24,6 @@ public class invsee extends Command {
     }
 
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        String var10001;
         if (sender instanceof Player) {
             if (sender.hasPermission("invsee.cmd") | sender.isOp()) {
                 if (args.length == 1) {
@@ -53,24 +52,19 @@ public class invsee extends Command {
                             ((Player) sender).addWindow(inv);
                             inv.addListener(this::onSlotChange);
                         }else {
-                            var10001 = prefix;
-                            sender.sendMessage(var10001 + "§cYou can`t edit your own Inventory!");
+                            sender.sendMessage(prefix + "§cYou can`t edit your own Inventory!");
                         }
                     } else {
-                        var10001 = prefix;
-                        sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotOnline());
+                        sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().isNotOnline());
                     }
                 } else {
-                    var10001 = prefix;
-                    sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().usagemessage());
+                    sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().usagemessage());
                 }
             } else {
-                var10001 = prefix;
-                sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().hasNotPermission());
+                sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().hasNotPermission());
             }
         } else {
-            var10001 = prefix;
-            sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotaPlayer());
+            sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().isNotaPlayer());
         }
 
         return true;

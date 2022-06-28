@@ -24,7 +24,6 @@ public class endersee extends Command {
     }
 
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
-        String var10001;
         if (sender instanceof Player) {
             if (sender.hasPermission("endersee.cmd") | sender.isOp()) {
                 if (args.length == 1) {
@@ -39,24 +38,19 @@ public class endersee extends Command {
                             ((Player) sender).addWindow(inv);
                             inv.addListener(this::onSlotChange);
                         }else {
-                            var10001 = prefix;
-                            sender.sendMessage(var10001 + "§cYou can`t edit your own Enderchest!");
+                            sender.sendMessage(prefix + "§cYou can`t edit your own Enderchest!");
                         }
                     } else {
-                        var10001 = prefix;
-                        sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotOnline());
+                        sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().isNotOnline());
                     }
                 } else {
-                    var10001 = prefix;
-                    sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().ecusagemessage());
+                    sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().ecusagemessage());
                 }
             } else {
-                var10001 = prefix;
-                sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().hasNotPermission());
+                sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().hasNotPermission());
             }
         } else {
-            var10001 = prefix;
-            sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotaPlayer());
+            sender.sendMessage(prefix + Main.getPlugin().getInvseeConfig().isNotaPlayer());
         }
 
         return true;
