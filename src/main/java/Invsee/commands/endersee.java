@@ -32,11 +32,16 @@ public class endersee extends Command {
                     Player target = Server.getInstance().getPlayer(one);
                     target2 = target;
                     if (target != null) {
-                        ChestFakeInventory inv = new ChestFakeInventory();
-                        inv.setName("§e" + target.getName() + "'s §5enderchest!");
-                        inv.setContents(target.getEnderChestInventory().getContents());
-                        ((Player) sender).addWindow(inv);
-                        inv.addListener(this::onSlotChange);
+                        if (!target.getName().equalsIgnoreCase(sender.getName())) {
+                            ChestFakeInventory inv = new ChestFakeInventory();
+                            inv.setName("§e" + target.getName() + "'s §5enderchest!");
+                            inv.setContents(target.getEnderChestInventory().getContents());
+                            ((Player) sender).addWindow(inv);
+                            inv.addListener(this::onSlotChange);
+                        }else {
+                            var10001 = prefix;
+                            sender.sendMessage(var10001 + "§cYou can`t edit your own Enderchest!");
+                        }
                     } else {
                         var10001 = prefix;
                         sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotOnline());

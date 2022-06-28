@@ -22,6 +22,8 @@ public class InvseeConfig {
         this.addDefault("invsee.message.isNotaPlayer", "§4You are not a player!");
         this.addDefault("invsee.message.playerIsNotOnline", "§4This Player is not online!");
         this.addDefault("invsee.message.endersee.usagemessage", "§4Please use /ecsee <Player>");
+        this.addDefault("invsee.message.description", "See other players Inventory!");
+        this.addDefault("invsee.message.endersee.description", "See other players Enderchest!");
     }
 
     public String prefix() {
@@ -46,6 +48,12 @@ public class InvseeConfig {
 
     public String ecusagemessage() {
         return this.config.getString("invsee.message.endersee.usagemessage");
+    }
+    public String invdescription(){
+        return this.config.getString("invsee.message.description");
+    }
+    public String ecdescription(){
+        return this.config.getString("invsee.message.endersee.description");
     }
 
     public void addDefault(String path, Object object) {

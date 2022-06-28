@@ -1,5 +1,9 @@
 name: Invsee
-version: 0.0.2
+version: 0.0.7
+softdepend:
+  - FakeInventories
+depend:
+  - FakeInventories
 api: 1.0.0
 author: Leon1917141
 main: Invsee.Main

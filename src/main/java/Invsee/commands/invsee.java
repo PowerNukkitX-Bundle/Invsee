@@ -32,25 +32,30 @@ public class invsee extends Command {
                     Player target = Server.getInstance().getPlayer(one);
                     target2 = target;
                     if (target != null) {
-                        DoubleChestFakeInventory inv = new DoubleChestFakeInventory();
-                        inv.setName("§e" + target.getName() + "'s §3inventory!");
-                        inv.setContents(target.getInventory().getContents());
-                        inv.setItem(40, Item.get(-161));
-                        inv.setItem(41, Item.get(-161));
-                        inv.setItem(42, Item.get(-161));
-                        inv.setItem(43, Item.get(-161));
-                        inv.setItem(44, Item.get(-161));
-                        inv.setItem(45, Item.get(-161));
-                        inv.setItem(46, Item.get(-161));
-                        inv.setItem(47, Item.get(-161));
-                        inv.setItem(48, Item.get(-161));
-                        inv.setItem(49, Item.get(-161));
-                        inv.setItem(50, Item.get(-161));
-                        inv.setItem(51, Item.get(-161));
-                        inv.setItem(52, Item.get(-161));
-                        inv.setItem(53, Item.get(-161));
-                        ((Player)sender).addWindow(inv);
-                        inv.addListener(this::onSlotChange);
+                        if (!target.getName().equalsIgnoreCase(sender.getName())) {
+                            DoubleChestFakeInventory inv = new DoubleChestFakeInventory();
+                            inv.setName("§e" + target.getName() + "'s §3inventory!");
+                            inv.setContents(target.getInventory().getContents());
+                            inv.setItem(40, Item.get(-161));
+                            inv.setItem(41, Item.get(-161));
+                            inv.setItem(42, Item.get(-161));
+                            inv.setItem(43, Item.get(-161));
+                            inv.setItem(44, Item.get(-161));
+                            inv.setItem(45, Item.get(-161));
+                            inv.setItem(46, Item.get(-161));
+                            inv.setItem(47, Item.get(-161));
+                            inv.setItem(48, Item.get(-161));
+                            inv.setItem(49, Item.get(-161));
+                            inv.setItem(50, Item.get(-161));
+                            inv.setItem(51, Item.get(-161));
+                            inv.setItem(52, Item.get(-161));
+                            inv.setItem(53, Item.get(-161));
+                            ((Player) sender).addWindow(inv);
+                            inv.addListener(this::onSlotChange);
+                        }else {
+                            var10001 = prefix;
+                            sender.sendMessage(var10001 + "§cYou can`t edit your own Inventory!");
+                        }
                     } else {
                         var10001 = prefix;
                         sender.sendMessage(var10001 + Main.getPlugin().getInvseeConfig().isNotOnline());

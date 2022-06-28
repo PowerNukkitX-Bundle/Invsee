@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Invsee:jar2">
+    <output-path>$USER_HOME$/Desktop/GhostNukkit/plugins</output-path>
+    <root id="archive" name="Invsee.jar">
+      <element id="module-output" name="Invsee" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/java/Invsee/libs/fakeinventories-1.0.3-SNAPSHOT (1).jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
