@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Read Project Info
+        id: "info"
+        uses: YunaBraska/java-info-action@main
+
+        # CONFIGS (Optional)
+        with:
+          deep: '-1'
+          work-dir: '.'
+          jv-fallback: 17
+          pv-fallback: '1.0.0'
+          pe-fallback: 'utf-8'
+          custom-gradle-cmd: "clean build"
+          custom-maven-cmd: "clean package"
+      - name: Build with Maven
+        run: mvn clean -B package --file pom.xml
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        if: success()
+        with:
+          name: ${{ steps.info.outputs.x_project_artifactId }}
+          path: target/${{ steps.info.outputs.x_project_artifactId }}-${{ steps.info.outputs.project_version }}.jar

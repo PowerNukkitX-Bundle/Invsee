@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Invsee:jar">
-    <output-path>$PROJECT_DIR$/../Desktop/waterdog/lobby 3/plugins</output-path>
-    <root id="archive" name="Invsee.jar">
-      <element id="module-output" name="Invsee" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/java/Invsee/libs/fakeinventories-1.0.3-SNAPSHOT (1).jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
