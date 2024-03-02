@@ -7,11 +7,15 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
+import cn.nukkit.event.inventory.ItemStackRequestActionEvent;
+import cn.nukkit.inventory.fake.FakeInventory;
+import cn.nukkit.inventory.fake.FakeInventoryType;
 import cn.nukkit.item.Item;
 import cn.nukkit.scheduler.Task;
-import com.nukkitx.fakeinventories.inventory.DoubleChestFakeInventory;
-import com.nukkitx.fakeinventories.inventory.FakeSlotChangeEvent;
+
 import java.util.Map;
+
+import static cn.nukkit.block.BlockID.BARRIER;
 
 public class invsee extends Command {
     public static String prefix = Main.getPlugin().getInvseeConfig().prefix();
@@ -20,7 +24,7 @@ public class invsee extends Command {
     public invsee(String name, String description, String usageMessage, String[] aliases) {
         super(name, description, usageMessage, aliases);
         this.setPermission("invsee.cmd");
-        this.commandParameters.put("invsee", new CommandParameter[]{new CommandParameter("invsee", CommandParamType.TARGET, false)});
+        this.commandParameters.put("invsee", new CommandParameter[]{CommandParameter.newType("invsee", CommandParamType.TARGET)});
     }
 
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
@@ -32,26 +36,26 @@ public class invsee extends Command {
                     target2 = target;
                     if (target != null) {
                         if (!target.getName().equalsIgnoreCase(sender.getName())) {
-                            DoubleChestFakeInventory inv = new DoubleChestFakeInventory();
-                            inv.setName("§e" + target.getName() + "'s §3inventory!");
+                            FakeInventory inv = new FakeInventory(FakeInventoryType.DOUBLE_CHEST);
+                            inv.setTitle("§e" + target.getName() + "'s §3inventory!");
                             inv.setContents(target.getInventory().getContents());
-                            inv.setItem(40, Item.get(-161));
-                            inv.setItem(41, Item.get(-161));
-                            inv.setItem(42, Item.get(-161));
-                            inv.setItem(43, Item.get(-161));
-                            inv.setItem(44, Item.get(-161));
-                            inv.setItem(45, Item.get(-161));
-                            inv.setItem(46, Item.get(-161));
-                            inv.setItem(47, Item.get(-161));
-                            inv.setItem(48, Item.get(-161));
-                            inv.setItem(49, Item.get(-161));
-                            inv.setItem(50, Item.get(-161));
-                            inv.setItem(51, Item.get(-161));
-                            inv.setItem(52, Item.get(-161));
-                            inv.setItem(53, Item.get(-161));
+                            inv.setItem(40, Item.get(BARRIER));
+                            inv.setItem(41, Item.get(BARRIER));
+                            inv.setItem(42, Item.get(BARRIER));
+                            inv.setItem(43, Item.get(BARRIER));
+                            inv.setItem(44, Item.get(BARRIER));
+                            inv.setItem(45, Item.get(BARRIER));
+                            inv.setItem(46, Item.get(BARRIER));
+                            inv.setItem(47, Item.get(BARRIER));
+                            inv.setItem(48, Item.get(BARRIER));
+                            inv.setItem(49, Item.get(BARRIER));
+                            inv.setItem(50, Item.get(BARRIER));
+                            inv.setItem(51, Item.get(BARRIER));
+                            inv.setItem(52, Item.get(BARRIER));
+                            inv.setItem(53, Item.get(BARRIER));
                             ((Player) sender).addWindow(inv);
-                            inv.addListener(this::onSlotChange);
-                        }else {
+                            inv.setDefaultItemHandler(this::onSlotChange);
+                        } else {
                             sender.sendMessage(prefix + "§cYou can`t edit your own Inventory!");
                         }
                     } else {
@@ -70,19 +74,16 @@ public class invsee extends Command {
         return true;
     }
 
-    private void onSlotChange(final FakeSlotChangeEvent event) {
-        if (event.getInventory() instanceof DoubleChestFakeInventory && event.getInventory().getName().equalsIgnoreCase("§e" + target2.getName() + "'s §3Inventory!")) {
-            if (event.getAction().getSlot() >= 40){
-                event.setCancelled(true);
-            }else {
-                Server.getInstance().getScheduler().scheduleDelayedTask(new Task() {
-                    public void onRun(int currentTick) {
-                        Map<Integer, Item> contens = event.getInventory().getContents();
-                        invsee.target2.getInventory().setContents(contens);
-                    }
-                }, 1);
-            }
+    private void onSlotChange(FakeInventory inv, int var1, Item var2, ItemStackRequestActionEvent var3) {
+        if (var1 >= 40) {
+            var3.setCancelled(true);
+        } else {
+            Server.getInstance().getScheduler().scheduleDelayedTask(new Task() {
+                public void onRun(int currentTick) {
+                    Map<Integer, Item> contens = inv.getContents();
+                    invsee.target2.getInventory().setContents(contens);
+                }
+            }, 1);
         }
-
     }
 }

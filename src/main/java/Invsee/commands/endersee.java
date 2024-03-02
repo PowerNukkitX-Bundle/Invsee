@@ -7,10 +7,12 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
+import cn.nukkit.inventory.Inventory;
+import cn.nukkit.inventory.fake.FakeInventory;
+import cn.nukkit.inventory.fake.FakeInventoryType;
 import cn.nukkit.item.Item;
 import cn.nukkit.scheduler.Task;
-import com.nukkitx.fakeinventories.inventory.ChestFakeInventory;
-import com.nukkitx.fakeinventories.inventory.FakeSlotChangeEvent;
+
 import java.util.Map;
 
 public class endersee extends Command {
@@ -20,7 +22,7 @@ public class endersee extends Command {
     public endersee(String name, String description, String usageMessage, String[] aliases) {
         super(name, description, usageMessage, aliases);
         this.setPermission("endersee.cmd");
-        this.commandParameters.put("endersee", new CommandParameter[]{new CommandParameter("endersee", CommandParamType.TARGET, false)});
+        this.commandParameters.put("endersee", new CommandParameter[]{CommandParameter.newType("endersee", CommandParamType.TARGET)});
     }
 
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
@@ -32,12 +34,12 @@ public class endersee extends Command {
                     target2 = target;
                     if (target != null) {
                         if (!target.getName().equalsIgnoreCase(sender.getName())) {
-                            ChestFakeInventory inv = new ChestFakeInventory();
-                            inv.setName("§e" + target.getName() + "'s §5enderchest!");
+                            FakeInventory inv = new FakeInventory(FakeInventoryType.CHEST);
+                            inv.setTitle("§e" + target.getName() + "'s §5enderchest!");
                             inv.setContents(target.getEnderChestInventory().getContents());
                             ((Player) sender).addWindow(inv);
                             inv.addListener(this::onSlotChange);
-                        }else {
+                        } else {
                             sender.sendMessage(prefix + "§cYou can`t edit your own Enderchest!");
                         }
                     } else {
@@ -56,11 +58,12 @@ public class endersee extends Command {
         return true;
     }
 
-    private void onSlotChange(final FakeSlotChangeEvent event) {
-        if (event.getInventory() instanceof ChestFakeInventory && event.getInventory().getName().equalsIgnoreCase("§e" + target2.getName() + "'s §5enderchest!")) {
+    private void onSlotChange(Inventory var1, Item var2, int var3) {
+        if (var1 instanceof FakeInventory fakeInventory && fakeInventory.getFakeInventoryType() == FakeInventoryType.CHEST &&
+                fakeInventory.getTitle().equalsIgnoreCase("§e" + target2.getName() + "'s §5enderchest!")) {
             Server.getInstance().getScheduler().scheduleDelayedTask(new Task() {
                 public void onRun(int currentTick) {
-                    Map<Integer, Item> contens = event.getInventory().getContents();
+                    Map<Integer, Item> contens = fakeInventory.getContents();
                     endersee.target2.getEnderChestInventory().setContents(contens);
                 }
             }, 1);

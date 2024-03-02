@@ -1,10 +1,6 @@
 name: Invsee
-version: 0.0.7
-softdepend:
-  - FakeInventories
-depend:
-  - FakeInventories
-api: 1.0.0
+version: "${pom.version}"
+api: 2.0.0
 author: Leon1917141
 main: Invsee.Main
 permissions:
