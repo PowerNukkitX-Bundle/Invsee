@@ -4,7 +4,6 @@ package Invsee;
 import Invsee.commands.endersee;
 import Invsee.commands.invsee;
 import Invsee.utils.InvseeConfig;
-import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
 
     public class Main extends PluginBase {
@@ -15,18 +14,13 @@ import cn.nukkit.plugin.PluginBase;
         }
 
         public void onEnable() {
-            if (Server.getInstance().getPluginManager().getPlugin("FakeInventories") != null) {
-                this.invseeConfig = new InvseeConfig(this);
-                this.invseeConfig.createDefault();
-                plugin = this;
-                String prefix = getPlugin().getInvseeConfig().prefix();
-                this.getServer().getLogger().info(prefix + "§eThe plugin has been activate!");
-                this.getServer().getCommandMap().register("help", new invsee("invsee", this.invseeConfig.invdescription(), this.getInvseeConfig().usagemessage(), new String[]{"inv"}));
-                this.getServer().getCommandMap().register("help", new endersee("endersee", this.invseeConfig.ecdescription(), this.getInvseeConfig().usagemessage(), new String[]{"ecsee"}));
-            }else{
-                getLogger().alert("§cYou must been install FakeInventories!");
-                getServer().getPluginManager().getPlugin("InvSee").onDisable();
-            }
+            this.invseeConfig = new InvseeConfig(this);
+            this.invseeConfig.createDefault();
+            plugin = this;
+            String prefix = getPlugin().getInvseeConfig().prefix();
+            this.getServer().getLogger().info(prefix + "§eThe plugin has been activate!");
+            this.getServer().getCommandMap().register("help", new invsee("invsee", this.invseeConfig.invdescription(), this.getInvseeConfig().usagemessage(), new String[]{"inv"}));
+            this.getServer().getCommandMap().register("help", new endersee("endersee", this.invseeConfig.ecdescription(), this.getInvseeConfig().usagemessage(), new String[]{"ecsee"}));
         }
 
         public void onDisable() {
