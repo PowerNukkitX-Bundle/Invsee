@@ -37,8 +37,10 @@ public class endersee extends Command {
                             FakeInventory inv = new FakeInventory(FakeInventoryType.CHEST);
                             inv.setTitle("§e" + target.getName() + "'s §5enderchest!");
                             inv.setContents(target.getEnderChestInventory().getContents());
-                            ((Player) sender).addWindow(inv);
                             inv.addListener(this::onSlotChange);
+                            Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
+                                ((Player) sender).addWindow(inv);
+                            }, 10);
                         } else {
                             sender.sendMessage(prefix + "§cYou can`t edit your own Enderchest!");
                         }
@@ -63,8 +65,8 @@ public class endersee extends Command {
                 fakeInventory.getTitle().equalsIgnoreCase("§e" + target2.getName() + "'s §5enderchest!")) {
             Server.getInstance().getScheduler().scheduleDelayedTask(new Task() {
                 public void onRun(int currentTick) {
-                    Map<Integer, Item> contens = fakeInventory.getContents();
-                    endersee.target2.getEnderChestInventory().setContents(contens);
+                    Map<Integer, Item> contents = fakeInventory.getContents();
+                    endersee.target2.getEnderChestInventory().setContents(contents);
                 }
             }, 1);
         }

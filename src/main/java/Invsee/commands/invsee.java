@@ -53,8 +53,10 @@ public class invsee extends Command {
                             inv.setItem(51, Item.get(BARRIER));
                             inv.setItem(52, Item.get(BARRIER));
                             inv.setItem(53, Item.get(BARRIER));
-                            ((Player) sender).addWindow(inv);
                             inv.setDefaultItemHandler(this::onSlotChange);
+                            Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
+                                ((Player) sender).addWindow(inv);
+                            }, 10);
                         } else {
                             sender.sendMessage(prefix + "§cYou can`t edit your own Inventory!");
                         }
@@ -74,9 +76,9 @@ public class invsee extends Command {
         return true;
     }
 
-    private void onSlotChange(FakeInventory inv, int var1, Item var2, ItemStackRequestActionEvent var3) {
-        if (var1 >= 40) {
-            var3.setCancelled(true);
+    private void onSlotChange(FakeInventory inv, int slot, Item item, Item item1, ItemStackRequestActionEvent itemStackRequestActionEvent) {
+        if (slot >= 40) {
+            itemStackRequestActionEvent.setCancelled(true);
         } else {
             Server.getInstance().getScheduler().scheduleDelayedTask(new Task() {
                 public void onRun(int currentTick) {
