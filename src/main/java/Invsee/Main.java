@@ -4,6 +4,7 @@ package Invsee;
 import Invsee.commands.endersee;
 import Invsee.commands.invsee;
 import Invsee.utils.InvseeConfig;
+import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginBase;
 
     public class Main extends PluginBase {
@@ -18,14 +19,14 @@ import cn.nukkit.plugin.PluginBase;
             this.invseeConfig.createDefault();
             plugin = this;
             String prefix = getPlugin().getInvseeConfig().prefix();
-            this.getServer().getLogger().info(prefix + "§eThe plugin has been activate!");
-            this.getServer().getCommandMap().register("help", new invsee("invsee", this.invseeConfig.invdescription(), this.getInvseeConfig().usagemessage(), new String[]{"inv"}));
-            this.getServer().getCommandMap().register("help", new endersee("endersee", this.invseeConfig.ecdescription(), this.getInvseeConfig().usagemessage(), new String[]{"ecsee"}));
+            this.getServer().getLogger().info(prefix + "§eThe plugin has been activated!");
+            this.getServer().getCommandMap().register("invsee", new invsee("invsee", this.invseeConfig.invdescription(), this.getInvseeConfig().usagemessage(), new String[]{"inv"}));
+            this.getServer().getCommandMap().register("endersee", new endersee("endersee", this.invseeConfig.ecdescription(), this.getInvseeConfig().usagemessage(), new String[]{"ecsee", "ec"}));
         }
 
         public void onDisable() {
             String prefix = getPlugin().getInvseeConfig().prefix();
-            this.getServer().getLogger().info(prefix + "§eThe plugin has been deactivate!");
+            this.getServer().getLogger().info(prefix + "§eThe plugin has been deactivated!");
         }
 
         public InvseeConfig getInvseeConfig() {

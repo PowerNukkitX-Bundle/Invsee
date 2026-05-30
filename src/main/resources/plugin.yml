@@ -1,10 +1,5 @@
 name: Invsee
 version: "${pom.version}"
-api: 2.0.0
+api: 3.0.0
 author: Leon1917141
 main: Invsee.Main
-permissions:
-  invsee.cmd:
-    default: false
-  endersee.cmd:
-    default: false
