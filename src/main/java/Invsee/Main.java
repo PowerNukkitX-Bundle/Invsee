@@ -4,8 +4,8 @@ package Invsee;
 import Invsee.commands.endersee;
 import Invsee.commands.invsee;
 import Invsee.utils.InvseeConfig;
-import cn.nukkit.Server;
-import cn.nukkit.plugin.PluginBase;
+import org.powernukkitx.Server;
+import org.powernukkitx.plugin.PluginBase;
 
     public class Main extends PluginBase {
         private InvseeConfig invseeConfig;

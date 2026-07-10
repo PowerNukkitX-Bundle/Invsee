@@ -1,7 +1,7 @@
 package Invsee.utils;
 
 import Invsee.Main;
-import cn.nukkit.utils.Config;
+import org.powernukkitx.utils.Config;
 import java.io.File;
 
 public class InvseeConfig {
